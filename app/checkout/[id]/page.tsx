@@ -1,7 +1,8 @@
-"use client"
+"use client";
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-// قائمة الولايات وأسعار التوصيل كما حددتها
+
 const wilayasData = [
   { name: "01 - أدرار (Adrar)", desk: 700, home: 1200 },
   { name: "02 - الشلف (Chlef)", desk: 500, home: 900 },
@@ -60,7 +61,7 @@ const wilayasData = [
   { name: "55 - تقرت (Touggourt)", desk: 450, home: 750 },
   { name: "56 - جانت (Djanet)", desk: 800, home: 1900 },
   { name: "57 - المغير (El M'Ghair)", desk: 350, home: 500 },
-  { name: "58 - المنيعة (El Meniaa)", desk: 0, home: 950 },
+  { name: "58 - المنيعة (El Meniaa)", desk: 0, home: 950 }
 ];
 
 export default function CheckoutPage() {
@@ -75,7 +76,6 @@ export default function CheckoutPage() {
     firstName: '', lastName: '', phone: '', wilaya: '', baladiya: '', address: '', deliveryType: 'home'
   });
 
-  // جلب معلومات المنتج المطلوب
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -101,17 +101,14 @@ export default function CheckoutPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // العثور على الولاية المختارة لمعرفة أسعارها
   const selectedWilayaData = wilayasData.find(w => w.name === formData.wilaya);
 
-  // تحديث نوع التوصيل تلقائياً إذا اختار ولاية لا تدعم توصيل المكتب
   useEffect(() => {
     if (selectedWilayaData && selectedWilayaData.desk === 0 && formData.deliveryType === 'desk') {
       setFormData(prev => ({ ...prev, deliveryType: 'home' }));
     }
   }, [formData.wilaya, selectedWilayaData, formData.deliveryType]);
 
-  // حساب تكلفة التوصيل
   let currentDeliveryCost = 0;
   if (selectedWilayaData) {
     currentDeliveryCost = formData.deliveryType === 'desk' ? selectedWilayaData.desk : selectedWilayaData.home;
@@ -140,7 +137,7 @@ export default function CheckoutPage() {
 
       if (response.ok) {
         alert(`تم تأكيد طلبك بنجاح! التكلفة النهائية: ${finalTotal} دج.`);
-        router.push('/'); // العودة للمتجر بعد الطلب
+        router.push('/'); 
       } else {
         alert('حدث خطأ، يرجى المحاولة مرة أخرى.');
       }
@@ -158,7 +155,6 @@ export default function CheckoutPage() {
     <div dir="rtl" className="min-h-screen bg-gray-50 font-sans py-12 px-4 pb-20">
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        {/* معلومات المنتج والفاتورة */}
         <div className="bg-white p-6 rounded-3xl shadow-md h-fit border border-gray-100">
           <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">ملخص الطلب</h2>
           <div className="flex gap-4 items-center mb-6">
@@ -190,7 +186,6 @@ export default function CheckoutPage() {
           </div>
         </div>
 
-        {/* نموذج معلومات الزبون */}
         <div className="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">معلومات التوصيل</h2>
           
@@ -227,13 +222,11 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* خيارات التوصيل تظهر فقط بعد اختيار الولاية */}
             {formData.wilaya && selectedWilayaData && (
               <div className="bg-gray-50 p-4 rounded-xl border border-gray-200 mt-4">
                 <label className="block text-sm font-bold text-gray-800 mb-3">طريقة التوصيل المتاحة:</label>
                 <div className="flex flex-col gap-3">
                   
-                  {/* خيار التوصيل للمكتب (يختفي إذا كان السعر 0) */}
                   {selectedWilayaData.desk > 0 && (
                     <label className="flex items-center gap-3 cursor-pointer p-3 bg-white border rounded-lg hover:border-blue-500 transition-colors">
                       <input 
@@ -249,7 +242,6 @@ export default function CheckoutPage() {
                     </label>
                   )}
                   
-                  {/* خيار التوصيل للمنزل */}
                   <label className="flex items-center gap-3 cursor-pointer p-3 bg-white border rounded-lg hover:border-blue-500 transition-colors">
                     <input 
                       type="radio" 
