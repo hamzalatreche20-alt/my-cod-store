@@ -1,39 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import prisma from '../../../lib/prisma'; // تأكد من مسار قاعدة البيانات الصحيح
-import { Metadata } from 'next';
-
-// هذه الدالة السحرية هي التي تقرأ بيانات المنتج وتعطيها لفيسبوك
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const productId = Number(resolvedParams.id);
-  
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-  });
-
-  if (!product) {
-    return { title: 'منتج غير متوفر' };
-  }
-
-  return {
-    title: `اطلب الآن: ${product.name}`,
-    description: `احصل على ${product.name} بسعر ${product.price} دج فقط! التوصيل متوفر والدفع عند الاستلام.`,
-    openGraph: {
-      title: `اطلب الآن: ${product.name}`,
-      description: `بسعر ${product.price} دج. الدفع عند الاستلام!`,
-      images: [
-        {
-          url: product.imageUrl, 
-          width: 800,
-          height: 600,
-          alt: product.name,
-        },
-      ],
-    },
-  };
-}
 // قائمة الولايات وأسعار التوصيل كما حددتها
 const wilayasData = [
   { name: "01 - أدرار (Adrar)", desk: 700, home: 1200 },
