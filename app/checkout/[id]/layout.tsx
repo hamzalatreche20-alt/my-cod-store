@@ -1,4 +1,4 @@
-import prisma from '../../../lib/prisma'; // إذا ظهر تحته خط أحمر، اجعله '../../lib/prisma'
+import prisma from '@/lib/prisma'; // إذا ظهر تحته خط أحمر، اجعله '../../lib/prisma'
 import { Metadata } from 'next';
 
 // 1. الدالة السحرية لقراءة بيانات المنتج وإرسالها لفيسبوك
