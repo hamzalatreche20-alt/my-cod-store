@@ -14,6 +14,7 @@ model Product {
   description String
   price       Float
   imageUrl    String
+  images      String[] @default([]) // 👈 هذا هو السطر الجديد لمعرض الصور
   createdAt   DateTime @default(now())
   orders      Order[]  // ربط المنتج بالطلبات
 }
