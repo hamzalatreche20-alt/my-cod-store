@@ -1,62 +1,67 @@
-import prisma from '../lib/prisma';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
-// لمنع حفظ نسخة قديمة من الصفحة وتحديثها فور إضافة منتج جديد
-export const dynamic = 'force-dynamic';
+export default function HomePage() {
+  const [products, setProducts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-export default async function StoreFront() {
-  // جلب جميع المنتجات من قاعدة البيانات
-  const products = await prisma.product.findMany({
-    orderBy: { createdAt: 'desc' },
-  });
+  useEffect(() => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50 font-sans pb-20">
+    <div dir="rtl" className="min-h-screen flex flex-col bg-gray-50 font-sans">
+      <Navbar />
       
-      {/* رأس المتجر (Header) */}
-      <header className="bg-blue-700 text-white text-center py-16 px-4 shadow-md">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">متجرنا الإلكتروني</h1>
-          <p className="text-xl text-blue-100">
-            تصفح أفضل منتجاتنا واطلبها الآن. الدفع عند الاستلام والتوصيل متوفر لجميع الولايات!
-          </p>
+      <main className="flex-grow max-w-6xl mx-auto px-4 py-12 w-full">
+        {/* قسم الترحيب */}
+        <div className="text-center mb-16 bg-blue-600 text-white p-12 rounded-3xl shadow-lg">
+          <h1 className="text-4xl md:text-5xl font-black mb-4">اكتشف أحدث العروض</h1>
+          <p className="text-lg md:text-xl font-medium opacity-90">تسوق الآن وادفع عند الاستلام بكل أمان!</p>
         </div>
-      </header>
 
-      {/* عرض المنتجات */}
-      <main className="max-w-6xl mx-auto px-4 mt-12">
-        {products.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-gray-500 text-2xl font-bold">المتجر فارغ حالياً.</p>
-            <p className="text-gray-400 mt-2">قم بالدخول إلى لوحة التحكم وإضافة منتجاتك الأولى.</p>
-          </div>
+        {/* شبكة المنتجات */}
+        {isLoading ? (
+          <div className="text-center text-xl font-bold text-gray-500 py-20">⏳ جاري تحميل المنتجات...</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.map((product) => (
-              <div key={product.id} className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-100">
-                <img 
-                  src={product.imageUrl} 
-                  alt={product.name} 
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-6 text-center">
-                  <h2 className="text-2xl font-bold text-gray-800 mb-2">{product.name}</h2>
-                  <p className="text-gray-500 mb-4 line-clamp-2 text-sm">{product.description}</p>
-                  <div className="text-3xl font-black text-orange-600 mb-6">{product.price} دج</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {products.map(product => (
+              <div key={product.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col transform hover:-translate-y-1">
+                <Link href={`/product/${product.id}`} className="block relative">
+                  <img src={product.imageUrl} alt={product.name} className="w-full h-64 object-cover" />
+                  <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">جديد</div>
+                </Link>
+                
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-1">{product.name}</h3>
+                  <p className="text-gray-500 text-sm mb-4 line-clamp-2">{product.description}</p>
                   
-                  {/* هذا الزر سيأخذ الزبون لصفحة الدفع الخاصة بهذا المنتج تحديداً */}
-                  <Link 
-                    href={`/checkout/${product.id}`} 
-                    className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors shadow-md"
-                  >
-                    اطلب الآن
-                  </Link>
+                  <div className="mt-auto flex items-center justify-between border-t pt-4">
+                    <span className="text-2xl font-black text-blue-600">{product.price} دج</span>
+                    <Link 
+                      href={`/product/${product.id}`}
+                      className="bg-gray-900 hover:bg-gray-800 text-white font-bold py-2 px-5 rounded-xl transition-colors text-sm"
+                    >
+                      التفاصيل
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         )}
       </main>
+
+      <Footer />
     </div>
   );
 }
