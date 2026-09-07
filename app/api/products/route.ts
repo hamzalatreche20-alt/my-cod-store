@@ -1,32 +1,35 @@
+import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
-import prisma from '../../../lib/prisma';
 
-// دالة جلب المنتجات (GET)
+// جلب كل المنتجات
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { id: 'desc' }
     });
     return NextResponse.json(products);
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'فشل جلب المنتجات' }, { status: 500 });
+    return NextResponse.json({ error: 'فشل جلب المنتجات' }, { status: 500 });
   }
 }
 
-// دالة إضافة منتج جديد (POST)
+// إضافة منتج جديد
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const newProduct = await prisma.product.create({
+
+    const product = await prisma.product.create({
       data: {
         name: body.name,
         description: body.description,
         price: Number(body.price),
         imageUrl: body.imageUrl,
+        images: body.images || [], // السطر الجديد لحفظ معرض الصور
       },
     });
-    return NextResponse.json({ success: true, product: newProduct }, { status: 201 });
+
+    return NextResponse.json({ success: true, product });
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'حدث خطأ' }, { status: 500 });
+    return NextResponse.json({ success: false, message: 'فشل إضافة المنتج' }, { status: 500 });
   }
 }
