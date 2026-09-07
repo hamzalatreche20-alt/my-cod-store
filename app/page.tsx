@@ -12,134 +12,144 @@ export default function HomePage() {
   useEffect(() => {
     fetch('/api/products')
       .then(res => res.json())
-      .then(data => {
-        setProducts(data);
-        setIsLoading(false);
-      });
+      .then(data => { setProducts(data); setIsLoading(false); });
   }, []);
 
   return (
-    <div dir="rtl" className="min-h-screen flex flex-col bg-[#F8F9FA] font-sans selection:bg-blue-600 selection:text-white">
+    <div dir="rtl" className="min-h-screen flex flex-col bg-[#f8fafc] font-sans selection:bg-blue-600 selection:text-white">
       <Navbar />
       
       <main className="flex-grow w-full">
         
-        {/* 1. قسم الواجهة الرئيسية (Hero Section) */}
-        <section className="relative bg-gray-900 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900 to-gray-900 opacity-90"></div>
-          {/* تأثير دائري في الخلفية للمسة عصرية */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+        {/* 1. قسم الواجهة (Hero Section) مع تأثيرات بصرية فخمة */}
+        <section className="relative overflow-hidden bg-white border-b border-gray-100">
+          {/* خلفية شبكية أنيقة (Grid Pattern) */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+          {/* دائرة زرقاء متوهجة للزينة */}
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-blue-100/50 blur-3xl"></div>
           
-          <div className="relative max-w-6xl mx-auto px-4 py-24 md:py-32 flex flex-col items-center text-center">
-            <span className="bg-blue-500/20 text-blue-300 font-bold px-4 py-1.5 rounded-full text-sm mb-6 border border-blue-500/30 backdrop-blur-sm">
-              🚀 أحدث تشكيلة لعام 2026
-            </span>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
-              تسوق بذكاء، اختر <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">الأفضل</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 max-w-2xl mb-10 font-medium leading-relaxed">
-              نوفر لك تشكيلة منتقاة بعناية من أفضل المنتجات بأسعار تنافسية. اطلب الآن وادفع براحة تامة عند استلام طلبك عند باب منزلك.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#products-section" className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-xl transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                تصفح المنتجات الآن
-              </a>
-              <Link href="/about" className="bg-white/10 hover:bg-white/20 text-white font-bold py-4 px-10 rounded-xl backdrop-blur-md transition-all border border-white/10">
-                تعرف علينا
-              </Link>
+          <div className="relative max-w-7xl mx-auto px-4 py-20 md:py-32 flex flex-col lg:flex-row items-center justify-between gap-12">
+            
+            <div className="lg:w-1/2 text-center lg:text-right z-10">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 font-bold text-sm mb-8 animate-bounce">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+                </span>
+                موسم التخفيضات الكبرى قد بدأ!
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-6 leading-tight tracking-tight">
+                اكتشف الجودة، <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-l from-blue-600 to-cyan-400">
+                  بأسعار لا تقاوم.
+                </span>
+              </h1>
+              <p className="text-lg md:text-xl text-gray-500 mb-10 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0">
+                تشكيلة حصرية من أفضل المنتجات المختارة بعناية. اطلب الآن براحة تامة، والدفع لن يكون إلا بعد استلامك للمنتج وتأكدك منه.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a href="#products" className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 shadow-[0_10px_40px_-10px_rgba(37,99,235,0.6)] flex justify-center items-center gap-2">
+                  <span>تسوق الآن</span>
+                  <svg className="w-5 h-5 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:w-1/2 relative z-10 group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-blue-600 to-cyan-300 rounded-3xl transform rotate-3 scale-105 opacity-20 group-hover:rotate-6 transition-transform duration-500"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop" 
+                alt="Shopping" 
+                className="relative rounded-3xl shadow-2xl object-cover h-[400px] w-full transform group-hover:-translate-y-2 transition-transform duration-500 border border-white/50"
+              />
             </div>
           </div>
         </section>
 
-        {/* 2. شريط الثقة والمميزات (Trust Badges) */}
-        <section className="border-b border-gray-200 bg-white">
-          <div className="max-w-6xl mx-auto px-4 py-10">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* 2. شريط مميزات المتجر (Floating Trust Badges) */}
+        <section className="relative z-20 -mt-10 max-w-7xl mx-auto px-4 mb-20">
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-50 p-6 md:p-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-gray-100">
               {[
-                { title: 'دفع عند الاستلام', desc: 'لا تدفع حتى تستلم منتجك', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
-                { title: 'توصيل سريع', desc: 'توصيل لجميع الولايات الـ 58', icon: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4' },
-                { title: 'ضمان الجودة', desc: 'منتجات أصلية ومضمونة 100%', icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z' },
-                { title: 'دعم متواصل', desc: 'خدمة عملاء طوال أيام الأسبوع', icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z' }
-              ].map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 text-blue-600">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d={feature.icon} />
-                    </svg>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-gray-900">{feature.title}</h4>
-                    <p className="text-sm text-gray-500 mt-1">{feature.desc}</p>
-                  </div>
+                { title: 'دفع عند الاستلام', desc: 'أمان تام وموثوقية', icon: '💵' },
+                { title: 'توصيل لـ 58 ولاية', desc: 'سريع إلى باب منزلك', icon: '🚚' },
+                { title: 'ضمان الجودة', desc: 'استبدال مجاني للمنتج', icon: '🛡️' },
+                { title: 'خدمة زبائن 24/7', desc: 'نحن هنا لمساعدتك دائماً', icon: '📞' }
+              ].map((f, i) => (
+                <div key={i} className="flex flex-col items-center text-center pt-6 md:pt-0 first:pt-0 group cursor-default">
+                  <div className="text-4xl mb-3 transform group-hover:scale-125 transition-transform duration-300">{f.icon}</div>
+                  <h4 className="font-bold text-gray-900 text-lg">{f.title}</h4>
+                  <p className="text-sm text-gray-500 mt-1 font-medium">{f.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* 3. قسم المنتجات */}
-        <section id="products-section" className="max-w-6xl mx-auto px-4 py-20">
-          <div className="flex justify-between items-end mb-12">
+        {/* 3. قسم المنتجات الاحترافي */}
+        <section id="products" className="max-w-7xl mx-auto px-4 py-10 mb-20">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
             <div>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">أحدث المنتجات</h2>
-              <div className="w-20 h-1.5 bg-blue-600 rounded-full"></div>
+              <h2 className="text-4xl font-black text-gray-900 mb-2">المنتجات الأكثر طلباً</h2>
+              <p className="text-gray-500 font-medium">تصفح أحدث المنتجات التي وفرناها لك هذا الأسبوع.</p>
             </div>
           </div>
 
           {isLoading ? (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
-            </div>
-          ) : products.length === 0 ? (
-            <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
-              <p className="text-xl text-gray-500 font-bold">المتجر قيد التجهيز، سيتم إضافة المنتجات قريباً!</p>
+            <div className="flex justify-center items-center h-64 space-x-2 space-x-reverse">
+              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce"></div>
+              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               {products.map(product => (
-                <div key={product.id} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
-                  {/* صورة المنتج مع زر سري يظهر عند المرور */}
-                  <div className="relative h-64 bg-gray-50 overflow-hidden">
+                <div key={product.id} className="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 flex flex-col h-full transform hover:-translate-y-2">
+                  
+                  {/* حاوية الصورة مع الزوم الداخلي */}
+                  <div className="relative h-72 overflow-hidden bg-gray-50 cursor-pointer" onClick={() => window.location.href = `/product/${product.id}`}>
                     <img 
                       src={product.imageUrl} 
                       alt={product.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out" 
                     />
-                   {/* الشارة الديناميكية */}
+                    
+                    {/* الشارة التسويقية الديناميكية (التي برمجناها سابقاً) */}
                     {product.badge && (
-                      <div className={`absolute top-3 right-3 text-xs font-black px-3 py-1.5 rounded-lg shadow-sm ${
-                        product.badge.includes('جديد') ? 'bg-green-500 text-white' :
-                        product.badge.includes('مبيعاً') ? 'bg-yellow-400 text-gray-900' :
-                        product.badge.includes('تخفيض') ? 'bg-blue-600 text-white' :
-                        'bg-red-500 text-white'
+                      <div className={`absolute top-4 right-4 text-xs font-black px-4 py-2 rounded-xl shadow-lg backdrop-blur-md ${
+                        product.badge.includes('جديد') ? 'bg-green-500/90 text-white border border-green-400' :
+                        product.badge.includes('مبيعاً') ? 'bg-yellow-400/90 text-gray-900 border border-yellow-300' :
+                        product.badge.includes('تخفيض') ? 'bg-blue-600/90 text-white border border-blue-500' :
+                        'bg-red-500/90 text-white border border-red-400'
                       }`}>
                         {product.badge}
                       </div>
                     )}
-                    {/* طبقة تظهر عند تمرير الماوس */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <Link href={`/product/${product.id}`} className="bg-white text-gray-900 font-bold py-2.5 px-6 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                        نظرة سريعة
-                      </Link>
+
+                    {/* زر المشاهدة السريعة يظهر عند التمرير */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                      <span className="bg-white/20 backdrop-blur-md text-white font-bold py-2.5 px-8 rounded-full border border-white/30 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        عرض التفاصيل
+                      </span>
                     </div>
                   </div>
                   
                   {/* معلومات المنتج */}
-                  <div className="p-5">
-                    <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-1">{product.name}</h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-1">{product.description}</p>
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-1 group-hover:text-blue-600 transition-colors">{product.name}</h3>
+                    <p className="text-sm text-gray-500 mb-6 line-clamp-2 leading-relaxed">{product.description}</p>
                     
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                    <div className="mt-auto flex items-center justify-between">
                       <div className="flex flex-col">
-                        <span className="text-xs text-gray-400 line-through mb-0.5">{Number(product.price) + (Number(product.price) * 0.2)} دج</span>
-                        <span className="text-xl font-black text-blue-600">{product.price} <span className="text-sm">دج</span></span>
+                        <span className="text-xs text-gray-400 line-through mb-1">{Number(product.price) + (Number(product.price) * 0.2)} دج</span>
+                        <span className="text-2xl font-black text-gray-900">{product.price} <span className="text-base font-bold text-blue-600">دج</span></span>
                       </div>
                       <Link 
                         href={`/product/${product.id}`}
-                        className="bg-gray-900 hover:bg-blue-600 text-white p-3 rounded-xl transition-colors shadow-sm"
+                        className="w-12 h-12 bg-gray-50 group-hover:bg-blue-600 text-gray-900 group-hover:text-white rounded-2xl flex items-center justify-center transition-all duration-300 shadow-sm group-hover:shadow-blue-300/50"
                         aria-label="اطلب الآن"
                       >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                           <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                         </svg>
                       </Link>
@@ -149,20 +159,6 @@ export default function HomePage() {
               ))}
             </div>
           )}
-        </section>
-
-        {/* 4. بانر تحفيزي قبل الفوتر */}
-        <section className="bg-blue-600 text-white py-16 mt-10">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-black mb-4">هل أنت جاهز لتجربة تسوق مميزة؟</h2>
-            <p className="text-blue-100 mb-8 text-lg">خدمة التوصيل السريع متاحة لـ 58 ولاية. اطلب اليوم واستلم غداً.</p>
-            <div className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 font-bold px-8 py-4 rounded-xl shadow-lg">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
-              <span>اتصل بنا للطلب المباشر</span>
-            </div>
-          </div>
         </section>
 
       </main>
