@@ -24,6 +24,8 @@ export async function POST(request: Request) {
         price: Number(body.price),
         imageUrl: body.imageUrl,
         images: body.images || [],
+        
+        // @ts-ignore
         badge: body.badge || null, // <--- السطر الجديد
       },
     });
