@@ -15,27 +15,23 @@ model Product {
   price       Float
   imageUrl    String
   images      String[] @default([]) // 👈 هذا هو السطر الجديد لمعرض الصور
+  badge       String?
   createdAt   DateTime @default(now())
   orders      Order[]  // ربط المنتج بالطلبات
 }
 
 // جدول الطلبات المحدث
+// هذا هو جدول الطلبات الجديد
 model Order {
   id           Int      @id @default(autoincrement())
-  firstName    String
-  lastName     String
-  phone        String
-  wilaya       String
-  baladiya     String
-  address      String
-  
-  // معلومات المنتج والتوصيل
   productId    Int
   product      Product  @relation(fields: [productId], references: [id])
-  productPrice Float
-  deliveryType String   // 'desk' (مكتب) أو 'home' (منزل)
-  deliveryCost Float
-  total        Float
-  
+  customerName String   @default("زبون قديم") // إضافة قيمة افتراضية
+  phone        String   @default("0000000000") // إضافة قيمة افتراضية
+  wilaya       String   @default("غير محدد") // إضافة قيمة افتراضية
+  address      String   @default("غير محدد") // إضافة قيمة افتراضية
+  quantity     Int      @default(1)          // إضافة قيمة افتراضية
+  totalPrice   Float    @default(0)          // إضافة قيمة افتراضية
+  status       String   @default("قيد الانتظار ⏳")
   createdAt    DateTime @default(now())
 }
