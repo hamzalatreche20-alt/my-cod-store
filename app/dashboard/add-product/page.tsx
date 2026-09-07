@@ -11,7 +11,8 @@ export default function AddProductPage() {
     description: '',
     price: '',
     imageUrl: '', // الصورة الرئيسية
-    images: [] as string[] // معرض الصور
+    images: [] as string[], // معرض الصور
+    badge: '' //  badge
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -131,7 +132,16 @@ export default function AddProductPage() {
             <input required type="number" name="price" value={formData.price} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl outline-none focus:border-blue-500 bg-gray-50" />
           </div>
         </div>
-
+<div>
+          <label className="block text-sm font-bold text-gray-700 mb-2">شارة التسويق (اختياري)</label>
+          <select name="badge" value={formData.badge} onChange={handleChange as any} className="w-full px-4 py-3 border rounded-xl outline-none focus:border-blue-500 bg-gray-50">
+            <option value="">-- بدون شارة --</option>
+            <option value="جديد ✨">منتج جديد ✨</option>
+            <option value="الأكثر مبيعاً 🔥">الأكثر مبيعاً 🔥</option>
+            <option value="تخفيض حصري 💰">تخفيض حصري 💰</option>
+            <option value="نفدت الكمية تقريباً 🚨">نفدت الكمية تقريباً 🚨</option>
+          </select>
+        </div>
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">الوصف والمواصفات</label>
           <textarea required name="description" rows={4} value={formData.description} onChange={handleChange} className="w-full px-4 py-3 border rounded-xl outline-none focus:border-blue-500 bg-gray-50" />

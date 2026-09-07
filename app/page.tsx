@@ -105,9 +105,17 @@ export default function HomePage() {
                       alt={product.name} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                     />
-                    <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-black px-3 py-1.5 rounded-lg shadow-sm">
-                      نفذت الكمية تقريباً
-                    </div>
+                   {/* الشارة الديناميكية */}
+                    {product.badge && (
+                      <div className={`absolute top-3 right-3 text-xs font-black px-3 py-1.5 rounded-lg shadow-sm ${
+                        product.badge.includes('جديد') ? 'bg-green-500 text-white' :
+                        product.badge.includes('مبيعاً') ? 'bg-yellow-400 text-gray-900' :
+                        product.badge.includes('تخفيض') ? 'bg-blue-600 text-white' :
+                        'bg-red-500 text-white'
+                      }`}>
+                        {product.badge}
+                      </div>
+                    )}
                     {/* طبقة تظهر عند تمرير الماوس */}
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Link href={`/product/${product.id}`} className="bg-white text-gray-900 font-bold py-2.5 px-6 rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">

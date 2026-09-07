@@ -17,17 +17,16 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-
     const product = await prisma.product.create({
       data: {
         name: body.name,
         description: body.description,
         price: Number(body.price),
         imageUrl: body.imageUrl,
-        images: body.images || [], // السطر الجديد لحفظ معرض الصور
+        images: body.images || [],
+        badge: body.badge || null, // <--- السطر الجديد
       },
     });
-
     return NextResponse.json({ success: true, product });
   } catch (error) {
     return NextResponse.json({ success: false, message: 'فشل إضافة المنتج' }, { status: 500 });
